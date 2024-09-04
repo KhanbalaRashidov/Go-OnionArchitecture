@@ -1,0 +1,5 @@
+# .dockerignore
+.git
+*.go
+*.mod
+*.sum

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Go-OnionArchitecture
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: Go-OnionArchitecture
+  template:
+    metadata:
+      labels:
+        app: Go-OnionArchitecture
+    spec:
+      containers:
+        - name: Go-OnionArchitecture
+          image: KhanbalaRashidov/Go-OnionArchitecture:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: "postgres://youruser:yourpassword@postgres-service:5432/yourdb?sslmode=disable"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: Go-OnionArchitecture
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Go-OnionArchitecture
